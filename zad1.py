@@ -12,6 +12,11 @@ p0,p1,d1,p2,d2,d3,d4,p3,d5,d6,d7
 
 Każdy bit parzystości kontroluje indeksy, których rozkład binarnie ma 1 na odpowiednim miejscu patrząc od końca (najmłodszy bit)
 np:
+
+11110101
+01110000
+
+p1 = d0 ⊕ d2 ⊕ d4 ⊕ d5
 1   = 0001 ✅
 2   = 0010 ❌
 3   = 0011 ✅
@@ -38,6 +43,16 @@ np. (policzone XOR-y)
     P8 = 0
 
 Syndrom = 0b0011 = 3 - wskazuje pozycje na której jest błąd - przy używaniu 0base trzeba odjąć 1
+
+Odległość hamminga - ilość bitów nie pasujących do siebie
+    np: 11110101
+        11001011 - odległość 5 - na 5 miejscach mają rózne wartości
+
+    Wykrywanie błędów: Kod wykrywa t błędów, jeśli odległość Hamminga D
+    między słowami kodowymi spełnia nierówność D>=t+1 - czyli do wykrycia 2 błedów potrzeba przynajmniej D=3
+
+    Korekcja błędów: Kod może poprawić t błędów, jeśli odległość Hamminga D
+    spełnia nierówność D>=2t+1. - czyli do skorygowania 2 błędów potrzebna przynajmniej D=5
 
 """
 
@@ -84,7 +99,6 @@ def detect_and_correct(hamming):
             data.append(hamming[i])
 
     return data
-
 
 def char_to_bits(char):
     bits = format(ord(char), '08b')
